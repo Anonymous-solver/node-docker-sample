@@ -33,7 +33,7 @@ pipeline {
         stage('Push to Harbor') {
             steps {
                 script {
-                    def harborHost = '127.0.0.1:80'
+                    def harborHost = 'localhost:80'
                     def harborProject = 'demo'
                     def harborUser = 'admin'
                     def harborPassword = 'Harbor12345'
