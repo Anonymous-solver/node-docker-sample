@@ -30,16 +30,34 @@ pipeline {
             }
         }
 
-        stage('Push Docker Image') {
+        stage('Push to Harbor') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    sh '''
-                        echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-                        docker push ${DOCKER_IMAGE}:latest
-                    '''
+                script {
+                    def harborHost = 'localhost'
+                    def harborProject = 'demo'
+                    def harborUser = 'admin'
+                    def harborPassword = '2357'
+ 
+                    // Tag image for Harbor
+                    sh "docker tag ${DOCKER_IMAGE}:latest ${harborHost}/${harborProject}/${DOCKER_IMAGE}:latest"
+ 
+                    // Login & Push
+                    sh "docker login ${harborHost} -u ${harborUser} -p ${harborPassword}"
+                    sh "docker push ${harborHost}/${harborProject}/${DOCKER_IMAGE}:latest"
                 }
             }
         }
+
+        // stage('Push Docker Image') {
+        //     steps {
+        //         withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+        //             sh '''
+        //                 echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+        //                 docker push ${DOCKER_IMAGE}:latest
+        //             '''
+        //         }
+        //     }
+        // }
 
         stage('Deploy Container') {
             steps {
