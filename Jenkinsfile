@@ -33,10 +33,10 @@ pipeline {
         stage('Push to Harbor') {
             steps {
                 script {
-                    def harborHost = 'localhost:80'
-                    def harborProject = 'demo'
+                    def harborHost = 'ec2-13-214-133-38.ap-southeast-1.compute.amazonaws.com:80'
+                    def harborProject = 'anik-demo'
                     def harborUser = 'admin'
-                    def harborPassword = '2357'
+                    def harborPassword = 'Harbor12345'
  
                     // Tag image for Harbor
                     sh "docker tag ${DOCKER_IMAGE}:latest ${harborHost}/${harborProject}/node-demo-80:latest"
