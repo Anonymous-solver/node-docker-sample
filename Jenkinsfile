@@ -36,7 +36,7 @@ pipeline {
                     def harborHost = 'localhost:80'
                     def harborProject = 'demo'
                     def harborUser = 'admin'
-                    def harborPassword = 'Harbor12345'
+                    def harborPassword = '2357'
  
                     // Tag image for Harbor
                     sh "docker tag node-docker-sample:latest ${harborHost}/${harborProject}/node-demo-80:latest"
