@@ -39,11 +39,11 @@ pipeline {
                     def harborPassword = '2357'
  
                     // Tag image for Harbor
-                    sh "docker tag ${DOCKER_IMAGE}:latest ${harborHost}/${harborProject}/${DOCKER_IMAGE}:latest"
+                    sh "docker tag ${DOCKER_IMAGE}:latest ${harborHost}/${harborProject}/node-demo-80:latest"
  
                     // Login & Push
                     sh "docker login ${harborHost} -u ${harborUser} -p ${harborPassword}"
-                    sh "docker push ${harborHost}/${harborProject}/${DOCKER_IMAGE}:latest"
+                    sh "docker push ${harborHost}/${harborProject}/node-demo-80:latest"
                 }
             }
         }
