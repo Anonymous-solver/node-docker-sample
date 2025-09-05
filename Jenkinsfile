@@ -26,7 +26,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh "docker build -t ${DOCKER_IMAGE}:latest ."
+                sh "docker build -t node-docker-sample:latest ."
             }
         }
 
@@ -39,7 +39,7 @@ pipeline {
                     def harborPassword = 'Harbor12345'
  
                     // Tag image for Harbor
-                    sh "docker tag ${DOCKER_IMAGE}:latest ${harborHost}/${harborProject}/node-demo-80:latest"
+                    sh "docker tag node-docker-sample:latest ${harborHost}/${harborProject}/node-demo-80:latest"
  
                     // Login & Push
                     sh "docker login ${harborHost} -u ${harborUser} -p ${harborPassword}"
@@ -64,7 +64,7 @@ pipeline {
                 sh '''
                     docker stop node-app || true
                     docker rm node-app || true
-                    docker run -d -p 3000:3000 --name node-app ${DOCKER_IMAGE}:latest
+                    docker run -d -p 3000:3000 --name node-app node-docker-sample:latest
                 '''
             }
         }
